@@ -19,13 +19,12 @@ namespace EntityFrameworkSample
         private void RegisterServices()
         {
             var builder = new ContainerBuilder();
-            var config = new HttpConfiguration();
 
-            builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
             builder.RegisterType<SampleDatabase>().As<ISampleDatabase>().InstancePerRequest();
+            builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
             var container = builder.Build();
-            config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+            GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
         }
     }
 }
